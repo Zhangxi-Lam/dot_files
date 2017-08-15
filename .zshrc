@@ -12,7 +12,7 @@ ZSH_THEME="af-magic"
 
 # Uncomment the following line to use hyphen-insensitive completion. Case
 # sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
+HYPHEN_INSENSITIVE="true"
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
 # DISABLE_AUTO_UPDATE="true"
@@ -27,7 +27,7 @@ ZSH_THEME="af-magic"
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 COMPLETION_WAITING_DOTS="true"
@@ -88,7 +88,7 @@ source $ZSH/oh-my-zsh.sh
 
 # alias
 alias gedit="open -a gedit"
-alias preview="open -a preview"
+# alias preview="open -a preview"
 alias grep='grep --color'
 alias egrep='egrep --color'
 alias fgrep='fgrep --color'
@@ -118,15 +118,15 @@ alias py="python"
 #set -o vi
 
 # virualenvwrapper Workon_home
-export WORKON_HOME=~/Envs
+# export WORKON_HOME=~/Envs
 
 # virtualenv
-export WORKON_HOME=$HOME/.virtualenvs
-export PROJECT_HOME=$HOME/virtual_workspace
-source /usr/local/bin/virtualenvwrapper.sh
+# export WORKON_HOME=$HOME/.virtualenvs
+# export PROJECT_HOME=$HOME/virtual_workspace
+# source /usr/local/bin/virtualenvwrapper.sh
 
 # octave
-alias octave="/usr/local/octave/3.8.0/bin/octave-3.8.0"
+# alias octave="/usr/local/octave/3.8.0/bin/octave-3.8.0"
 
 # Local Vim 
-alias vim="/usr/local/bin/vim"
+# alias vim="/usr/local/bin/vim"
