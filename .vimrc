@@ -6,13 +6,13 @@ set encoding=utf8
 set ffs=unix,dos,mac
 
 set history=700
-set autoread
 
-let mapleader=","
-let g:mapleader=","
+let mapleader=" "
+let g:mapleader=" "
 
-nnoremap <leader>w :w!<cr>
+nnoremap <leader>s :w!<cr>
 nnoremap <leader>qq :q<cr>
+nnoremap <leader>qa :qall<cr>
 
 inoremap jj <ESC>
 
@@ -23,16 +23,16 @@ nnoremap <silent> <leader><space> :noh<cr>:pc<cr>
 nnoremap <leader>cd :cd %:p:h<cr>:pwd<cr>
 
 " space to toggle folding
-nnoremap <space> za
+nnoremap <leader>zz za
 
 " copy all contents
-nnoremap <leader>cp mzggyG`z
+nnoremap <leader>a mzggyG`z
 
 " paste mode toggle
-nnoremap <leader>pp :setlocal paste!<cr>:set relativenumber!<cr>:set nu!<cr>  
+nnoremap <leader>c :setlocal paste!<cr>:set relativenumber!<cr>:set nu!<cr>
 
 " filesytem autocomplete
-inoremap <leader>fa <C-x><C-f>
+inoremap ,f <C-x><C-f>
 
 set mouse=a
 
@@ -49,6 +49,7 @@ setlocal keywordprg=:help
 set nu
 set relativenumber
 set hid
+set backspace=eol,start,indent
 set whichwrap+=<,>,h,l
 set ruler
 
@@ -64,18 +65,14 @@ set magic
 " paren match
 set showmatch
 
-" bells
-set noerrorbells
-set novisualbell
-set t_vb=
-set tm=500
-
 " folding
 set fdm=syntax
 set foldlevel=99
 
+
+
 """"""""""""""""""""
-" Files, backup and undo 
+" Files, backup and undo
 """"""""""""""""""""
 " turn off filetype temporarily
 filetype plugin indent off
@@ -110,10 +107,11 @@ nnoremap j gj
 nnoremap k gk
 
 " Smart way to move between window
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
+nnoremap <leader>h <C-w>h
+nnoremap <leader>j <C-w>j
+nnoremap <leader>k <C-w>k
+nnoremap <leader>l <C-w>l
+
 
 " tab window
 nnoremap th <C-Pageup>
@@ -123,8 +121,8 @@ nnoremap <leader>tm :tabmove<cr>
 
 try
     set switchbuf=useopen,usetab,newtab
-        set stal=2
-    catch
+    set stal=2
+catch
 endtry
 
 " Return to last edit position when opening files
@@ -155,49 +153,85 @@ nnoremap <leader>sp :setlocal spell!<cr>
 
 " Vundle
 " Brief help
-" :BundleList		- list configured bundles
-" :BundleInstall(!)	- install(update) bundles
-" :BundleSearch(!) foo	- search(or refresh cache first) for foo
-" :BundleClean(!)	- confirm(or auto-approve) removal of unused bundles
+" :PluginList       - list configured bundles
+" :PluginInstall(!) - install(update) bundles
+" :PluginSearch(!) foo  - search(or refresh cache first) for foo
+" :PluginClean(!)   - confirm(or auto-approve) removal of unused bundles
 set nocompatible
 filetype off
 
 set rtp+=~/.vim/bundle/vundle.vim
 call vundle#begin()
-Bundle 'Vundlevim/vundle.vim'
+Plugin 'Vundlevim/vundle.vim'
 
 " Syntastic
 " symatics check
-Bundle 'scrooloose/syntastic'
+Plugin 'scrooloose/syntastic'
 " facility to syntastic, open llist quickly
 " <leader>l open llist, <leader>q quit llist
-Bundle 'Valloric/ListToggle'
+Plugin 'Valloric/ListToggle'
+let g:lt_location_list_toggle_map = '<leader>wl'
+let g:lt_quickfix_list_toggle_map = '<leader>wq'
 
-Bundle 'tpope/vim-fugitive'
-Bundle 'airblade/vim-gitgutter'
+Plugin 'tpope/vim-fugitive'
+Plugin 'airblade/vim-gitgutter'
 " C/C++ header/source jump
-Bundle 'a.vim'
+" Plugin 'a.vim'
 " file finder
-Bundle 'kien/ctrlp.vim'
+Plugin 'kien/ctrlp.vim'
 " Vim utilities
-Bundle 'L9'
+Plugin 'L9'
 " Statusline utility
-Bundle 'Lokaltog/powerline'
+Plugin 'Lokaltog/powerline'
 " Move around
-Bundle 'Lokaltog/vim-easymotion'
+Plugin 'Lokaltog/vim-easymotion'
 " Modify surrounding tag/'/"/(/[, etc.
 " example: normal mode, cs({
-Bundle 'tpope/vim-surround'
+Plugin 'tpope/vim-surround'
 " Auto complete brackets
-Bundle 'Raimondi/delimitMate'
-Bundle 'Shougo/vimproc'
+Plugin 'Raimondi/delimitMate'
+Plugin 'Shougo/vimproc'
 
-Bundle 'ervandew/supertab'
+" Use tab for completion
+Plugin 'ervandew/supertab'
 
-Bundle 'scrooloose/nerdtree'
-"Bundle 'Valloric/YouCompleteMe'
+" FileTree
+Plugin 'scrooloose/nerdtree'
+
+" Split mo
+Plugin 'bkad/CamelCaseMotion'
+
+" C/C++ auto completion
+Plugin 'justmao945/vim-clang'
+
+" Google AutoFormat
+Plugin 'google/vim-maktaba'
+Plugin 'google/vim-codefmt'
+Plugin 'google/vim-glaive'
+
+Plugin 'Lokaltog/vim-powerline'
+
+Plugin 'Shougo/unite.vim'
+
+"Plugin 'Valloric/YouCompleteMe'
+"Plugin 'rdnetto/YCM-Generator'
+
+Plugin 'Shougo/vimshell'
 
 call vundle#end()
+
+filetype plugin indent on
+syntax on
+
+" CamelCaseMotion
+map <silent> w <Plug>CamelCaseMotion_w
+map <silent> b <Plug>CamelCaseMotion_b
+map <silent> e <Plug>CamelCaseMotion_e
+map <silent> ge <Plug>CamelCaseMotion_ge
+sunmap w
+sunmap b
+sunmap e
+sunmap ge
 
 " open NERDTree when vim starts up
 autocmd vimenter * :NERDTree
@@ -205,15 +239,59 @@ map <C-n> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 
+" git-fugitive
+nnoremap <leader>gd :Gdiff<cr>
+nnoremap <leader>gs :Gstatus<cr>
 
-filetype plugin indent on
-syntax on
+" a.vim
+" try
+"     iunmap <leader>ih
+"     iunmap <leader>is
+"     iunmap <leader>ihn
+" catch
+" endtry
+
+" Syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:vimshell_external_history_path = expand('~/.zsh-history')
+
+
+" Google AutoFormat
+augroup autoformat_settings
+    autocmd FileType bzl AutoFormatBuffer buildifier
+    autocmd FileType c,cpp,proto,javascript AutoFormatBuffer clang-format
+    autocmd FileType dart AutoFormatBuffer dartfmt
+    autocmd FileType go AutoFormatBuffer gofmt
+    autocmd FileType gn AutoFormatBuffer gn
+    autocmd FileType html,css,json AutoFormatBuffer js-beautify
+    autocmd FileType java AutoFormatBuffer google-java-format
+    autocmd FileType python AutoFormatBuffer yapf
+    " Alternative: autocmd FileType python AutoFormatBuffer autopep8
+augroup END
+
+try
+    au BufWritePre * :FormatLines
+catch
+endtry
+
+" VimShell
+let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
+let g:vimshell_prompt = '$ '
+nnoremap <leader>t :VimShellPop <CR>
+" Make shell window show below the current window.
+set splitbelow
+
 
 """"""""""""""""""""
 " Colors & Fonts
 """"""""""""""""""""
-syntax on 
-
 set background=dark
 
 try
@@ -225,9 +303,12 @@ highlight ColorColumn ctermbg=blue guibg=#2c2d27
 let &colorcolumn="121"
 hi Search ctermbg=yellow ctermfg=black
 hi IncSearch ctermbg=yellow ctermfg=black
+highlight ExtraWhitespace ctermbg=red guibg=red
+
+""""""""""""""""""""
 " Vim utils
 """"""""""""""""""""
- 
+
 setlocal keywordprg=:help
 
 augroup myvimrchooks
