@@ -202,7 +202,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'bkad/CamelCaseMotion'
 
 " C/C++ auto completion
-Plugin 'justmao945/vim-clang'
+"Plugin 'justmao945/vim-clang'
 
 " Google AutoFormat
 Plugin 'google/vim-maktaba'
@@ -213,15 +213,21 @@ Plugin 'Lokaltog/vim-powerline'
 
 Plugin 'Shougo/unite.vim'
 
-"Plugin 'Valloric/YouCompleteMe'
-"Plugin 'rdnetto/YCM-Generator'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'rdnetto/YCM-Generator'
 
 Plugin 'Shougo/vimshell'
+
+Plugin 'Shougo/echodoc'
 
 call vundle#end()
 
 filetype plugin indent on
 syntax on
+
+" Echodoc
+set cmdheight=2
+autocmd bufenter * :EchoDocEnable
 
 " CamelCaseMotion
 map <silent> w <Plug>CamelCaseMotion_w
@@ -288,6 +294,15 @@ nnoremap <leader>t :VimShellPop <CR>
 " Make shell window show below the current window.
 set splitbelow
 
+" YouCompleteMe
+let g:ycm_confirm_extra_conf = 0
+let g:syntastic_always_populate_loc_list = 1
+let g:ycm_error_symbol = '>>'
+let g:ycm_warning_symbol = '>*'
+"nnoremap gd :YcmCompleter GoToDeclaration<CR>
+"nnoremap gd :YcmCompleter GoToDefinition<CR>
+nnoremap gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+nmap <leader>yd :YcmDiags<CR>
 
 """"""""""""""""""""
 " Colors & Fonts
@@ -300,7 +315,7 @@ catch
 endtry
 
 highlight ColorColumn ctermbg=blue guibg=#2c2d27
-let &colorcolumn="121"
+let &colorcolumn="81"
 hi Search ctermbg=yellow ctermfg=black
 hi IncSearch ctermbg=yellow ctermfg=black
 highlight ExtraWhitespace ctermbg=red guibg=red
