@@ -12,6 +12,7 @@ let g:mapleader=" "
 
 nnoremap <leader>s :w!<cr>
 nnoremap <leader>qq :q<cr>
+nnoremap <leader>x :x<cr>
 nnoremap <leader>qa :qall<cr>
 
 inoremap jj <ESC>
@@ -93,8 +94,8 @@ filetype plugin indent on
 " Text and tabs
 """"""""""""""""""""
 set smarttab
-set shiftwidth=4
-set tabstop=4
+set shiftwidth=2
+set tabstop=2
 set expandtab
 
 set ai "Auto indent
