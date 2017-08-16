@@ -263,9 +263,6 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:vimshell_external_history_path = expand('~/.zsh-history')
 
-" echodoc
-set cmdheight=2
-
 " Google AutoFormat
 augroup autoformat_settings
     autocmd FileType bzl AutoFormatBuffer buildifier
