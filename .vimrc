@@ -114,8 +114,8 @@ nnoremap <leader>l <C-w>l
 
 
 " tab window
-nnoremap th <C-Pageup>
-nnoremap tl <C-Pagedown>
+nnoremap <leader>th <C-Pageup>
+nnoremap <leader>tl <C-Pagedown>
 nnoremap <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 nnoremap <leader>tm :tabmove<cr>
 
@@ -235,7 +235,7 @@ sunmap ge
 
 " open NERDTree when vim starts up
 autocmd vimenter * :NERDTree
-map <C-n> :NERDTreeToggle<CR>
+map <leader>n :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 
@@ -256,12 +256,15 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
+" vimshell
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:vimshell_external_history_path = expand('~/.zsh-history')
 
+" echodoc
+set cmdheight=2
 
 " Google AutoFormat
 augroup autoformat_settings
