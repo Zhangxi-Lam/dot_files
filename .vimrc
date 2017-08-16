@@ -12,6 +12,7 @@ let g:mapleader=" "
 
 nnoremap <leader>s :w!<cr>
 nnoremap <leader>qq :q<cr>
+nnoremap <leader>x :x<cr>
 nnoremap <leader>qa :qall<cr>
 
 inoremap jj <ESC>
