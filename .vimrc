@@ -11,14 +11,15 @@ let mapleader=" "
 let g:mapleader=" "
 
 nnoremap <leader>s :w!<cr>
-nnoremap <leader>qq :q<cr>
+nnoremap <leader>w :q<cr>
 nnoremap <leader>x :x<cr>
+nnoremap <leader>qq :q!<cr>
 nnoremap <leader>qa :qall<cr>
 
 inoremap jj <ESC>
 
 " cancel highlight, close preview window
-nnoremap <silent> <leader><space> :noh<cr>:pc<cr>
+nnoremap <silent> <leader>, :noh<cr>:pc<cr>
 
 " cd to file's base directory
 nnoremap <leader>cd :cd %:p:h<cr>:pwd<cr>
@@ -36,6 +37,12 @@ nnoremap <leader>c :setlocal paste!<cr>:set relativenumber!<cr>:set nu!<cr>
 inoremap ,f <C-x><C-f>
 
 set mouse=a
+
+set clipboard=unnamed
+
+nnoremap <leader>fv :silent tabedit ~/.vimrc<cr>
+nnoremap <leader>fz :silent tabedit ~/.zshrc<cr>
+nnoremap <leader>ff /
 
 """"""""""""""""""""
 " UI
@@ -89,7 +96,6 @@ augroup END
 
 filetype plugin indent on
 
-
 """"""""""""""""""""
 " Text and tabs
 """"""""""""""""""""
@@ -112,6 +118,8 @@ nnoremap <leader>h <C-w>h
 nnoremap <leader>j <C-w>j
 nnoremap <leader>k <C-w>k
 nnoremap <leader>l <C-w>l
+nnoremap <leader>r <C-w>r
+nnoremap <leader>x <C-w>x
 
 
 " tab window
@@ -139,7 +147,7 @@ set viminfo^=%
 """"""""""""""""""""
 
 " Pressing ,sp will toggle and toggle spell checking
-nnoremap <leader>sp :setlocal spell!<cr>
+nnoremap <C-s> :setlocal spell!<cr>
 
 " Shortcuts using <leader>
 "  ]s next word
@@ -183,7 +191,7 @@ Plugin 'kien/ctrlp.vim'
 " Vim utilities
 Plugin 'L9'
 " Statusline utility
-Plugin 'Lokaltog/powerline'
+Plugin 'Lokaltog/vim-powerline'
 " Move around
 Plugin 'Lokaltog/vim-easymotion'
 " Modify surrounding tag/'/"/(/[, etc.
@@ -198,6 +206,7 @@ Plugin 'ervandew/supertab'
 
 " FileTree
 Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/nerdcommenter'
 
 " Split mo
 Plugin 'bkad/CamelCaseMotion'
@@ -210,14 +219,12 @@ Plugin 'google/vim-maktaba'
 Plugin 'google/vim-codefmt'
 Plugin 'google/vim-glaive'
 
-Plugin 'Lokaltog/vim-powerline'
+Plugin 'editorconfig/editorconfig-vim'
 
 Plugin 'Shougo/unite.vim'
 
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'rdnetto/YCM-Generator'
-
-Plugin 'Shougo/vimshell'
 
 Plugin 'Shougo/echodoc'
 
@@ -226,6 +233,8 @@ call vundle#end()
 filetype plugin indent on
 syntax on
 
+" powerline
+set laststatus=2
 " Echodoc
 set cmdheight=2
 autocmd bufenter * :EchoDocEnable
@@ -247,8 +256,8 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 
 
 " git-fugitive
-nnoremap <leader>gd :Gdiff<cr>
-nnoremap <leader>gs :Gstatus<cr>
+nnoremap <leader>gtd :Gdiff<cr>
+nnoremap <leader>gts :Gstatus<cr>
 
 " a.vim
 " try
@@ -284,26 +293,24 @@ augroup autoformat_settings
 augroup END
 
 try
-    au BufWritePre * :FormatLines
+    au BufWritePre *.c,*.cpp,*.py,*.java,*.html :FormatLines
 catch
 endtry
-
-" VimShell
-let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
-let g:vimshell_prompt = '$ '
-nnoremap <leader>t :VimShellPop <CR>
-" Make shell window show below the current window.
-set splitbelow
 
 " YouCompleteMe
 let g:ycm_confirm_extra_conf = 0
 let g:syntastic_always_populate_loc_list = 1
 let g:ycm_error_symbol = '>>'
 let g:ycm_warning_symbol = '>*'
-"nnoremap gd :YcmCompleter GoToDeclaration<CR>
-"nnoremap gd :YcmCompleter GoToDefinition<CR>
+nnoremap gl :YcmCompleter GoToDeclaration<CR>
+nnoremap gf :YcmCompleter GoToDefinition<CR>
 nnoremap gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 nmap <leader>yd :YcmDiags<CR>
+
+" NerdComment
+let g:NERDCreateDefaultMappings = 0
+map <leader>/ :call NERDComment(0,"toggle")<cr>
+
 
 """"""""""""""""""""
 " Colors & Fonts
@@ -331,5 +338,157 @@ augroup myvimrchooks
     au!
     autocmd bufwritepost .vimrc source ~/.vimrc
 augroup END
+
+""""""""""""""""""""
+" Cscope
+""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" CSCOPE settings for vim
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"
+" This file contains some boilerplate settings for vim's cscope interface,
+" plus some keyboard mappings that I've found useful.
+"
+" USAGE:
+" -- vim 6:     Stick this file in your ~/.vim/plugin directory (or in a
+"               'plugin' directory in some other directory that is in your
+"               'runtimepath'.
+"
+" -- vim 5:     Stick this file somewhere and 'source cscope.vim' it from
+"               your ~/.vimrc file (or cut and paste it into your .vimrc).
+"
+" NOTE:
+" These key maps use multiple keystrokes (2 or 3 keys).  If you find that vim
+" keeps timing you out before you can complete them, try changing your timeout
+" settings, as explained below.
+"
+" Happy cscoping,
+"
+" Jason Duell       jduell@alumni.princeton.edu     2002/3/7
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+" This tests to see if vim was configured with the '--enable-cscope' option
+" when it was compiled.  If it wasn't, time to recompile vim...
+if has("cscope")
+
+    """"""""""""" Standard cscope/vim boilerplate
+
+    " use both cscope and ctag for 'ctrl-]', ':ta', and 'vim -t'
+    set cscopetag
+
+    " check cscope for definition of a symbol before checking ctags: set to 1
+    " if you want the reverse search order.
+    set csto=0
+
+    " add any cscope database in current directory
+    if filereadable("cscope.out")
+        cs add cscope.out
+    " else add the database pointed to by environment variable
+    elseif $CSCOPE_DB != ""
+        cs add $CSCOPE_DB
+    endif
+
+    " show msg when any other cscope db added
+    set cscopeverbose
+
+    """"""""""""" My cscope/vim key mappings
+    "
+    " The following maps all invoke one of the following cscope search types:
+    "
+    "   's'   symbol: find all references to the token under cursor
+    "   'g'   global: find global definition(s) of the token under cursor
+    "   'c'   calls:  find all calls to the function name under cursor
+    "   't'   text:   find all instances of the text under cursor
+    "   'e'   egrep:  egrep search for the word under cursor
+    "   'f'   file:   open the filename under cursor
+    "   'i'   includes: find files that include the filename under cursor
+    "   'd'   called: find functions that function under cursor calls
+    "
+    
+    " To do the first type of search, hit 'CTRL-\', followed by one of the
+    " cscope search types above (s,g,c,t,e,f,i,d).  The result of your cscope
+    " search will be displayed in the current window.  You can use CTRL-T to
+    " go back to where you were before the search.
+    "
+
+    "   's'   symbol: find all references to the token under cursor
+    nmap <leader>gs :cs find s <C-R>=expand("<cword>")<CR><CR>
+    "   'g'   global: find global definition(s) of the token under cursor
+    nmap <leader>gg :cs find g <C-R>=expand("<cword>")<CR><CR>
+    "   'c'   calls:  find all calls to the function name under cursor
+    nmap <leader>gc :cs find c <C-R>=expand("<cword>")<CR><CR>
+    "   't'   text:   find all instances of the text under cursor
+    nmap <leader>gt :cs find t <C-R>=expand("<cword>")<CR><CR>
+    "   'e'   egrep:  egrep search for the word under cursor
+    nmap <leader>ge :cs find e <C-R>=expand("<cword>")<CR><CR>
+    "   'd'   called: find functions that function under cursor calls
+    "nmap <leader>gd :cs find d <C-R>=expand("<cword>")<CR><CR>
+    "nmap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+    "nmap <C-\>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+
+
+    " Using 'CTRL-spacebar' (intepreted as CTRL-@ by vim) then a search type
+    " makes the vim window split horizontally, with search result displayed in
+    " the new window.
+    "
+    " (Note: earlier versions of vim may not have the :scs command, but it
+    " can be simulated roughly via:
+    "    nmap <C-@>s <C-W><C-S> :cs find s <C-R>=expand("<cword>")<CR><CR>
+
+    "nmap <C-@>s :scs find s <C-R>=expand("<cword>")<CR><CR>
+    "nmap <C-@>g :scs find g <C-R>=expand("<cword>")<CR><CR>
+    "nmap <C-@>c :scs find c <C-R>=expand("<cword>")<CR><CR>
+    "nmap <C-@>t :scs find t <C-R>=expand("<cword>")<CR><CR>
+    "nmap <C-@>e :scs find e <C-R>=expand("<cword>")<CR><CR>
+    "nmap <C-@>f :scs find f <C-R>=expand("<cfile>")<CR><CR>
+    "nmap <C-@>i :scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+    "nmap <C-@>d :scs find d <C-R>=expand("<cword>")<CR><CR>
+
+
+    " Hitting CTRL-space *twice* before the search type does a vertical
+    " split instead of a horizontal one (vim 6 and up only)
+    "
+    " (Note: you may wish to put a 'set splitright' in your .vimrc
+    " if you prefer the new window on the right instead of the left
+
+    "nmap <C-@><C-@>s :vert scs find s <C-R>=expand("<cword>")<CR><CR>
+    "nmap <C-@><C-@>g :vert scs find g <C-R>=expand("<cword>")<CR><CR>
+    "nmap <C-@><C-@>c :vert scs find c <C-R>=expand("<cword>")<CR><CR>
+    "nmap <C-@><C-@>t :vert scs find t <C-R>=expand("<cword>")<CR><CR>
+    "nmap <C-@><C-@>e :vert scs find e <C-R>=expand("<cword>")<CR><CR>
+    "nmap <C-@><C-@>f :vert scs find f <C-R>=expand("<cfile>")<CR><CR>
+    "nmap <C-@><C-@>i :vert scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+    "nmap <C-@><C-@>d :vert scs find d <C-R>=expand("<cword>")<CR><CR>
+
+
+    """"""""""""" key map timeouts
+    "
+    " By default Vim will only wait 1 second for each keystroke in a mapping.
+    " You may find that too short with the above typemaps.  If so, you should
+    " either turn off mapping timeouts via 'notimeout'.
+    "
+    "set notimeout
+    "
+    " Or, you can keep timeouts, by uncommenting the timeoutlen line below,
+    " with your own personal favorite value (in milliseconds):
+    "
+    "set timeoutlen=4000
+    "
+    " Either way, since mapping timeout settings by default also set the
+    " timeouts for multicharacter 'keys codes' (like <F1>), you should also
+    " set ttimeout and ttimeoutlen: otherwise, you will experience strange
+    " delays as vim waits for a keystroke after you hit ESC (it will be
+    " waiting to see if the ESC is actually part of a key code like <F1>).
+    "
+    "set ttimeout
+    "
+    " personally, I find a tenth of a second to work well for key code
+    " timeouts. If you experience problems and have a slow terminal or network
+    " connection, set it higher.  If you don't set ttimeoutlen, the value for
+    " timeoutlent (default: 1000 = 1 second, which is sluggish) is used.
+    "
+    "set ttimeoutlen=100
+endif
 
 
