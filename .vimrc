@@ -184,6 +184,7 @@ let g:lt_quickfix_list_toggle_map = '<leader>wq'
 
 Plugin 'tpope/vim-fugitive'
 Plugin 'airblade/vim-gitgutter'
+let g:gitgutter_map_keys = 0
 " C/C++ header/source jump
 " Plugin 'a.vim'
 " file finder
