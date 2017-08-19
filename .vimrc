@@ -118,8 +118,6 @@ nnoremap <leader>h <C-w>h
 nnoremap <leader>j <C-w>j
 nnoremap <leader>k <C-w>k
 nnoremap <leader>l <C-w>l
-nnoremap <leader>r <C-w>r
-nnoremap <leader>x <C-w>x
 
 
 " tab window
@@ -184,6 +182,7 @@ let g:lt_quickfix_list_toggle_map = '<leader>wq'
 
 Plugin 'tpope/vim-fugitive'
 Plugin 'airblade/vim-gitgutter'
+let g:gitgutter_map_keys = 0
 " C/C++ header/source jump
 " Plugin 'a.vim'
 " file finder
