@@ -1,6 +1,11 @@
 # Path to your oh-my-zsh installation.
 export ZSH=${HOME}/.oh-my-zsh
 
+# Expire duplicate entries first when trimming history.
+setopt HIST_EXPIRE_DUPS_FIRST    
+# Delete old recorded entry if new entry is a duplicate.
+setopt HIST_IGNORE_ALL_DUPS      
+
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
@@ -27,7 +32,7 @@ HYPHEN_INSENSITIVE="true"
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-ENABLE_CORRECTION="true"
+# ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 COMPLETION_WAITING_DOTS="true"
@@ -82,7 +87,7 @@ HIST_STAMPS="mm/dd/yyyy"
 # git local-commits	list unpushed commits on the local branch
 #
 # wd bookmarks dirs
-plugins=(git zsh-syntax-highlighting)
+plugins=(git zsh-syntax-highlighting percol)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -111,12 +116,6 @@ alias gl="git log"
 # alias for python
 alias py="python"
 
-# alias for macvim
-# alias vim="mvim"
-
-# vi mode in zsh
-#set -o vi
-
 # virualenvwrapper Workon_home
 # export WORKON_HOME=~/Envs
 
@@ -129,4 +128,5 @@ alias py="python"
 # alias octave="/usr/local/octave/3.8.0/bin/octave-3.8.0"
 
 # Local Vim 
-# alias vim="/usr/local/bin/vim"
+alias vim="/usr/local/bin/vim"
+export PATH="/usr/local/opt/llvm/bin:$PATH"
