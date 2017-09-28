@@ -174,28 +174,39 @@ Plugin 'Vundlevim/vundle.vim'
 " Syntastic
 " symatics check
 Plugin 'scrooloose/syntastic'
+" Syntastic
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+
 " facility to syntastic, open llist quickly
 " <leader>l open llist, <leader>q quit llist
 Plugin 'Valloric/ListToggle'
 let g:lt_location_list_toggle_map = '<leader>wl'
 let g:lt_quickfix_list_toggle_map = '<leader>wq'
 
+" git-fugitive
 Plugin 'tpope/vim-fugitive'
 Plugin 'airblade/vim-gitgutter'
 let g:gitgutter_map_keys = 0
-" C/C++ header/source jump
-" Plugin 'a.vim'
+nnoremap <leader>gtdv :Gvdiff<cr>
+nnoremap <leader>gts :Gstatus<cr>
 " file finder
 Plugin 'kien/ctrlp.vim'
 " Vim utilities
 Plugin 'L9'
 " Statusline utility
+" powerline
 Plugin 'Lokaltog/vim-powerline'
+set laststatus=2
+
 " Move around
 Plugin 'Lokaltog/vim-easymotion'
-" Modify surrounding tag/'/"/(/[, etc.
-" example: normal mode, cs({
-Plugin 'tpope/vim-surround'
 " Auto complete brackets
 Plugin 'Raimondi/delimitMate'
 Plugin 'Shougo/vimproc'
@@ -205,13 +216,26 @@ Plugin 'ervandew/supertab'
 
 " FileTree
 Plugin 'scrooloose/nerdtree'
+" open NERDTree when vim starts up
+autocmd vimenter * :NERDTree
+map <leader>n :NERDTreeToggle<CR>
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+" Comment out
 Plugin 'scrooloose/nerdcommenter'
+
 
 " Split mo
 Plugin 'bkad/CamelCaseMotion'
-
-" C/C++ auto completion
-"Plugin 'justmao945/vim-clang'
+" CamelCaseMotion
+map <silent> w <Plug>CamelCaseMotion_w
+map <silent> b <Plug>CamelCaseMotion_b
+map <silent> e <Plug>CamelCaseMotion_e
+map <silent> ge <Plug>CamelCaseMotion_ge
+sunmap w
+sunmap b
+sunmap e
+sunmap ge
 
 " Google AutoFormat
 Plugin 'google/vim-maktaba'
@@ -225,8 +249,7 @@ Plugin 'Shougo/unite.vim'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'rdnetto/YCM-Generator'
 
-Plugin 'Shougo/echodoc'
-
+" cpp highlight
 Plugin 'octol/vim-cpp-enhanced-highlight'
 
 let g:cpp_class_scope_highlight = 1
@@ -240,50 +263,9 @@ call vundle#end()
 filetype plugin indent on
 syntax on
 
-" powerline
-set laststatus=2
-" Echodoc
-set cmdheight=2
-autocmd bufenter * :EchoDocEnable
-
-" CamelCaseMotion
-map <silent> w <Plug>CamelCaseMotion_w
-map <silent> b <Plug>CamelCaseMotion_b
-map <silent> e <Plug>CamelCaseMotion_e
-map <silent> ge <Plug>CamelCaseMotion_ge
-sunmap w
-sunmap b
-sunmap e
-sunmap ge
-
-" open NERDTree when vim starts up
-autocmd vimenter * :NERDTree
-map <leader>n :NERDTreeToggle<CR>
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 
-" git-fugitive
-nnoremap <leader>gtd :Gdiff<cr>
-nnoremap <leader>gts :Gstatus<cr>
 
-" a.vim
-" try
-"     iunmap <leader>ih
-"     iunmap <leader>is
-"     iunmap <leader>ihn
-" catch
-" endtry
-
-" Syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-" vimshell
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
 let g:vimshell_external_history_path = expand('~/.zsh-history')
 
 " Google AutoFormat
