@@ -275,14 +275,14 @@ augroup autoformat_settings
     autocmd FileType dart AutoFormatBuffer dartfmt
     autocmd FileType go AutoFormatBuffer gofmt
     autocmd FileType gn AutoFormatBuffer gn
-    autocmd FileType html,css,json AutoFormatBuffer js-beautify
+    autocmd FileType css,json AutoFormatBuffer js-beautify
     autocmd FileType java AutoFormatBuffer google-java-format
     autocmd FileType python AutoFormatBuffer yapf
     " Alternative: autocmd FileType python AutoFormatBuffer autopep8
 augroup END
 
 try
-    au BufWritePre *.c,*.cpp,*.py,*.java,*.html :FormatLines
+    au BufWritePre *.c,*.cpp,*.py,*.java :FormatLines
 catch
 endtry
 
@@ -480,4 +480,8 @@ if has("cscope")
     "set ttimeoutlen=100
 endif
 
+""""""""""""""""""""
+" HTML
+""""""""""""""""""""
+:nmap <F5> :w <Bar> !open %<CR>
 
